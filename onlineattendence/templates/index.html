@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><style>
+.button {
+  background-color: #80002a;
+  border: none;
+  color: white;
+  padding: 12px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+</style>
+
+
+<br>
+<br>
+        <meta charset="UTF-8">
+        <title>Online Attendence System></title>
+    <center><h1><I><font color="#500516 "> Welcome to Online Attendence System</font></I></h1></center></head>
+</head>
+
+
+<BODY BGCOLOR=lightpink>
+
+<br><br>
+        {% block content %}
+
+            {% if user.is_authenticated %}
+<center>
+    <a href="{%url 'logout' %}"><INPUT TYPE="button"  class="button"VALUE="SignOut"></a>
+</center>
+                {% else %}
+                <a href="{%url 'login_url' %}"><INPUT TYPE="button"  class="button" VALUE="SignIn"></a>
+<br>
+<a href="{%url 'register_url'%}"><INPUT TYPE="button" class="button"VALUE="SignUp"></a>
+            {% endif %}
+        {% endblock %}
+
+</body>
+</html>

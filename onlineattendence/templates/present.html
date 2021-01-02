@@ -1,0 +1,294 @@
+<head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Attendance</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<BODY BGCOLOR=	cornsilk>
+<h1><font color="#D41131">Attendance Record</font></h1>
+<style>
+    body {
+    line-height: 1.6;
+    margin: 2em;}
+	th {
+    background-color: #001f3f;
+    color: #fff;
+    padding: 0.5em 1em;
+}
+td {
+    border-top: 1px solid #eee;
+    padding: 0.5em 1em;}
+input {
+    cursor: pointer;}
+
+/* Column types */
+th.missed-col {
+    background-color: #f00;}
+
+td.missed-col {
+    background-color: #ffecec;
+    color: #f00;
+    text-align: center;}
+
+.name-col {
+    text-align: left;
+}
+        </style>
+        <table>
+            <thead>
+                <tr>
+                    <th class="name-col">Student Name</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>7</th>
+                    <th>8</th>
+                    <th>9</th>
+                    <th>10</th>
+                    <th>11</th>
+                    <th>12</th>
+                    <th>13</th>
+                    <th>14</th>
+                    <th class="missed-col">Total Absent</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script >
+(function() {
+  if (!localStorage.attendance) {
+    console.log('Creating attendance records...');
+    function getRandom() {
+      return (Math.random() >= 0.5);
+    }
+
+    var nameColumns = $('tbody .roll-col'),
+    attendance = {};
+
+    nameColumns.each(function() {
+      var roll = this.innerText;
+      attendance[roll] = [];
+
+      for (var i = 0; i <= 11; i++) {
+        attendance[roll].push(getRandom());
+      }
+    });
+
+    localStorage.attendance = JSON.stringify(attendance);
+  }
+}());
+
+
+$(function(){
+  var model = {
+      attendanceArray: [
+	  {
+        roll : '17101120',
+        daysMissed : 14,
+        id: '17101120'
+      },
+      {
+        roll : '17101119',
+        daysMissed : 14,
+        id: '17101119'
+      },
+      {
+        roll : '17101118',
+        daysMissed : 14,
+        id: '17101118'
+      },
+      {
+        roll : '17101117',
+        daysMissed : 14,
+        id: '17101117'
+      },
+      {
+        roll : '17101116',
+        daysMissed : 14,
+        id: '17101116'
+      },
+      {
+        roll : '17101115',
+        daysMissed : 14,
+        id: '17101115'
+      },
+	  {
+        roll : '17101114',
+        daysMissed : 14,
+        id: '17101114'
+      },
+
+	  {
+        roll : '17101113',
+        daysMissed : 14,
+        id: '17101113'
+      },
+	  {
+        roll : '17101112',
+        daysMissed : 14,
+        id: '17101112'
+      },
+	  {
+        roll : '17101111',
+        daysMissed : 14,
+        id: '17101111'
+      },
+	  {
+        roll : '17101110',
+        daysMissed : 14,
+        id: '17101110'
+      },
+	  {
+        roll : '17101109',
+        daysMissed : 14,
+        id: '17101109'
+      },
+	  {
+        roll : '17101108',
+        daysMissed : 14,
+        id: '17101108'
+      },
+	  {
+        roll : '17101107',
+        daysMissed : 14,
+        id: '17101107'
+      },
+	  {
+        roll : '17101106',
+        daysMissed : 14,
+        id: '17101106'
+      },
+	  {
+        roll : '17101105',
+        daysMissed : 14,
+        id: '17101105'
+      },
+	  {
+        roll : '17101104',
+        daysMissed : 14,
+        id: '17101104'
+      },
+	  {
+        roll : '17101103',
+        daysMissed : 14,
+        id: '17101103'
+      },
+	  {
+        roll : '17101102',
+        daysMissed : 14,
+        id: '17101102'
+      },
+	  {
+        roll : '17101101',
+        daysMissed : 14,
+        id: '17101101'
+      },
+      ]
+    };
+
+
+var atdnc = {
+  init: function() {
+    view.init(model.attendanceArray);
+    view.initChecks();
+  },
+
+  updateAttendance: function(studentId, daysAttended) {
+    // get student obj by student id
+    var updatedRecord = $.grep(model.attendanceArray, function(e, i) {
+      if (e.id === studentId){
+        //get index of record
+        model.attendanceArray[i].daysAttended = daysAttended;
+        return true;
+      }
+    });
+    view.updateRecords(updatedRecord[0]);
+  }
+};
+
+var view = {
+  init: function(data) {
+    var tbody$ = $('tbody');
+    data.forEach(function(data) {
+      var noSpaceName = data.roll.replace(/ /g,'');
+      //create row that will house student records
+      tRow = $('<tr />', { class: 'student ', id: noSpaceName}).prependTo(tbody$);
+      //add student roll
+      $('<td />', { html: data.roll, 'class': 'roll-col'}).prependTo(tRow);
+      //add checkboxes
+      var i = 0;
+      for (i; i < data.daysMissed; i++) {
+        $('<td />', { html: '<input type="checkbox" class=' + noSpaceName + ' />', 'class': 'attend-col'}).appendTo(tRow);
+      }
+      //add missed days
+      $('<td />', { html: data.daysMissed, 'class': 'missed-col'}).appendTo(tRow);
+    });
+  },
+
+  initChecks: function(){
+    var chckBoxArr = [];
+    var cks = $(':checkbox');
+    var chckBoxes = $(cks).each(function(i) {
+      chckBoxArr.push( $(this) );
+    });
+
+    for (var i = 0; i < chckBoxArr.length; i++){
+      chckBox = chckBoxArr[i];
+      chckBox.on('click', (function(chckCopy) {
+          return function() {
+            view.countAttendance(chckCopy);
+          };
+      })(chckBox));
+    }
+  },
+
+  countAttendance: function(recordToCheck){
+    var studentName = recordToCheck[0].getAttribute('class');
+    //future update: change to data attr
+    //loop through the parents to find matching record
+    $('.student').each(function(){
+      var this$ = $(this);
+      var numOfDays;
+      if ( this$.attr('id') === studentName ) {
+      //loop through checkboxes to get checked
+        this$.find('.attend-col :checked').each(function(i){
+          //+1 to account for zero
+         numOfDays = (i+1);
+        });
+
+        if (numOfDays === undefined || null){
+          atdnc.updateAttendance(studentName, 0);
+
+        } else {
+          atdnc.updateAttendance(studentName, numOfDays);
+        }
+      }
+    });
+  },
+
+  updateRecords: function(recordToUpdate){
+    var id = recordToUpdate.id;
+    var missed = recordToUpdate.daysMissed;
+    var daysAttended = recordToUpdate.daysAttended;
+
+    $('#' + id).find('.missed-col').html(missed-daysAttended);
+  }
+};
+
+atdnc.init();
+});
+</script>
+<form>
+    <input type="submit" value="Save" formaction="http://127.0.0.1:8000/users/dashboard">
+</form>
+
+    </body>
+
+
+

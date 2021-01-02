@@ -1,0 +1,33 @@
+<head>
+    <style>
+        .button {
+              background-color: #f44336;;
+              border: none;
+              color: white;
+              padding: 16px 32px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 14px;
+              margin: 2px 2px;
+              cursor: pointer;
+}
+    </style>
+</head>
+{% extends 'attendence/base.html' %}
+{% block body %}
+
+
+    <h3>{{Teacher.name}}</h3>
+    <h4>Current courses :</h4>
+    <ul>
+        {% for teaches in Teacher.teaches_set.all %}
+        <li>
+            <B>{{ teaches.Course_code}}- {{ teaches.Section}}</B>
+        <form>
+            <input type="submit" class="button" value="Take attendance" formaction="http://127.0.0.1:8000/present">
+        </form>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

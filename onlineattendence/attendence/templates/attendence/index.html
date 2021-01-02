@@ -1,0 +1,35 @@
+<head>
+    <style>
+        .button {
+              background-color: #f44336;;
+              border: none;
+              color: white;
+              padding: 16px 32px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 14px;
+              margin: 2px 2px;
+              cursor: pointer;
+}
+    </style>
+</head>
+{% extends 'attendence/base.html' %}
+{% block body %}
+    {% if all_teachers %}
+
+<h3><i>Click name to see the registered courses</i></h3>
+        <ul>
+            {% for Teacher in all_teachers %}
+            <li><a href="{% url 'attendence:detail' Teacher.id %}">{{Teacher.name}}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+    <h3> You don't have any teachers</h3>
+
+    {% endif %}
+<form>
+        <br><br>
+        <input type="submit" class="button" value="Go Back" formaction="http://127.0.0.1:8000/users/dashboard">
+</form>
+{% endblock %}

@@ -1,0 +1,50 @@
+<HTML xmlns="http://www.w3.org/1999/html"> <HEAD>
+<style>
+.button {
+  background-color: #b32400;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+</style>
+<TITLE> Add Class </TITLE>
+    <script>
+    function validate(TEXT){
+    if(TEXT.length<6){
+    document.getElementById("msg").innerHTML= "Course Code Must Be Alphanumeric";
+    return;
+    }
+    }
+</script>
+</HEAD>
+<DIV align=LEFT><BR><BR>
+    <h1> <center><font color=black SIZE="40"><I><font color="#860000">Add class</font></I></font></center></h1>
+    <br>
+    <br>
+<BODY BGCOLOR=SANDYBROWN>
+<form ><center>
+<level for="ccode"><B>Course Code :</B></level>
+    <INPUT TYPE="TEXT" id="ccode" placeholder="e.g. XXX101" onkeyup="validate(this.value);"/>
+    <span id="msg"></span>
+<BR><BR>
+<B>Section : </B>
+<INPUT TYPE="TEXT" NAME="sec" SIZE="10" MAXLENGTH="10" placeholder="e.g. A">
+<BR><BR>
+<B>Semester : </B>
+    <INPUT TYPE="TEXT" NAME="sem" SIZE="10" MAXLENGTH="10" placeholder="e.g. 1-1">
+<BR><BR>
+    <input type="submit" class="button" value="Add" formaction="http://127.0.0.1:8000/present">
+    <input type="reset" class="button" value="Reset">
+<BR><BR>
+</center>
+</FORM>
+
+</BODY>
+</DIV>
+</HTML>
